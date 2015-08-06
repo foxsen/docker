@@ -20,7 +20,7 @@ import (
 func (s *TagStore) Import(src string, repo string, tag string, inConfig io.ReadCloser, outStream io.Writer, containerConfig *runconfig.Config) error {
 	var (
 		sf      = streamformatter.NewJSONStreamFormatter()
-		archive archive.ArchiveReader
+		archive archive.Reader
 		resp    *http.Response
 	)
 
@@ -45,7 +45,7 @@ func (s *TagStore) Import(src string, repo string, tag string, inConfig io.ReadC
 			In:        resp.Body,
 			Out:       outStream,
 			Formatter: sf,
-			Size:      int(resp.ContentLength),
+			Size:      resp.ContentLength,
 			NewLines:  true,
 			ID:        "",
 			Action:    "Importing",

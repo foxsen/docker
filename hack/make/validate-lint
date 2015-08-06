@@ -23,8 +23,10 @@ packages=(
 	daemon/execdriver/lxc
 	daemon/execdriver/native
 	daemon/execdriver/native/template
+	daemon/execdriver/windows
 	daemon/graphdriver/aufs
 	daemon/graphdriver/devmapper
+	daemon/graphdriver/zfs
 	daemon/logger
 	daemon/logger/fluentd
 	daemon/logger/gelf
@@ -35,12 +37,18 @@ packages=(
 	docker
 	dockerinit
 	graph
+	daemon/graphdriver/vfs
 	image
 	integration-cli
+	pkg/archive
+	pkg/broadcastwriter
 	pkg/chrootarchive
 	pkg/directory
 	pkg/fileutils
+	pkg/graphdb
 	pkg/homedir
+	pkg/httputils
+	pkg/ioutils
 	pkg/listenbuffer
 	pkg/mflag
 	pkg/mflag/example
@@ -65,6 +73,7 @@ packages=(
 	pkg/streamformatter
 	pkg/stringid
 	pkg/stringutils
+	pkg/sysinfo
 	pkg/systemd
 	pkg/symlink
 	pkg/tailfile

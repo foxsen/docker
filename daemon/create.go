@@ -11,12 +11,12 @@ import (
 	"github.com/opencontainers/runc/libcontainer/label"
 )
 
-func (daemon *Daemon) ContainerCreate(name string, config *runconfig.Config, hostConfig *runconfig.HostConfig) (string, []string, error) {
+func (daemon *Daemon) ContainerCreate(name string, config *runconfig.Config, hostConfig *runconfig.HostConfig, adjustCPUShares bool) (string, []string, error) {
 	if config == nil {
 		return "", nil, fmt.Errorf("Config cannot be empty in order to create a container")
 	}
 
-	daemon.adaptContainerSettings(hostConfig)
+	daemon.adaptContainerSettings(hostConfig, adjustCPUShares)
 	warnings, err := daemon.verifyContainerSettings(hostConfig, config)
 	if err != nil {
 		return "", warnings, err
@@ -62,9 +62,6 @@ func (daemon *Daemon) Create(config *runconfig.Config, hostConfig *runconfig.Hos
 
 	if err := daemon.mergeAndVerifyConfig(config, img); err != nil {
 		return nil, nil, err
-	}
-	if !config.NetworkDisabled && daemon.SystemConfig().IPv4ForwardingDisabled {
-		warnings = append(warnings, "IPv4 forwarding is disabled.")
 	}
 	if hostConfig == nil {
 		hostConfig = &runconfig.HostConfig{}
